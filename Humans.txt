@@ -1,0 +1,23 @@
+	/* TEAM */
+	UI developer: Bikramaditya Sahoo
+	Contact: ansh.ansh20067 [at] gmail.com
+	Facebook: @AnshBikram
+	Location: Bhubaneswar, India
+
+	Back-end developer: Amaya Ranjan Das
+	Contact: amaya.das [at] gmail.com
+	Facebook: @amayaranjandas
+	Location:Bhubaneswar, India
+		
+	/* THANKS */
+	Ashish Kumar Badtiya
+	Contact: itsashis4u [at] gmail.com
+	Facebook: @itsashis4u
+
+
+	/* SITE */
+	Last update: 12/02/2014
+	Technology: HTML5, CSS, Javascript, jQuery, JSON, XML, AJAX, Java, Tomcat 6.0,
+	Cloud Computing, MySQL, Amazon VAS Service, Redis
+	
+	IDE: Notepad++, Photoshop, Eclipse, Audacity, After Effects

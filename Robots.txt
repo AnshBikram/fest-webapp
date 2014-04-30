@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: advaita.iiit-bh.ac.in/sitemap.xml

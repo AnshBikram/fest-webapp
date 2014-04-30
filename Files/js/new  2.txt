@@ -1,0 +1,172 @@
+set <variable> <data>
+get <variable>
+
+
+
+DROP TABLE IF EXISTS eventRegistered;
+DROP TABLE IF EXISTS eventRegistration;
+DROP TABLE IF EXISTS sponsors;
+DROP TABLE IF EXISTS eventMeta;
+DROP TABLE IF EXISTS eventGroupMeta;
+DROP TABLE IF EXISTS register;
+DROP TABLE IF EXISTS discussionComment;
+DROP TABLE IF EXISTS discussionTopic;
+DROP TABLE IF EXISTS roseiQuiz;
+DROP TABLE IF EXISTS eventApp;
+
+
+CREATE TABLE IF NOT EXISTS eventApp (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	name varchar(2555) NOT NULL COMMENT 'name of event',
+	fee double DEFAULT NULL COMMENT 'GENERAL REGISTRATION FEE',
+	imgUrl varchar(2555) DEFAULT NULL COMMENT 'image url',
+	about varchar(3000) DEFAULT NULL COMMENT 'About event',
+	scheduleFrom varchar(100) DEFAULT NULL COMMENT 'from time of event',
+	scheduleTo varchar(100) DEFAULT NULL COMMENT 'to time of event',
+	contact varchar(2555) DEFAULT NULL COMMENT 'contact information',
+	PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS register (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	appId int(11) NOT NULL COMMENT 'appId of event',
+	name varchar(255) NOT NULL COMMENT 'name of student',
+	registrationDate datetime DEFAULT NULL COMMENT 'DATE TIME OF REGISTRATION',
+	registrationStatus bit(2) NOT NULL COMMENT 'ACTIVE/INACTIVE',
+	registrationUUID varchar(255) DEFAULT NULL COMMENT 'UUID for email verification',
+	feeReceived double DEFAULT NULL COMMENT 'GENERAL REGISTRATION FEE',
+	feeStatus bit(2) DEFAULT 0 COMMENT 'STATUS OF FEE',
+	email varchar(255) NOT NULL COMMENT 'email of student',
+	year int(11) NOT NULL COMMENT 'year of student',
+	branch varchar(100) NOT NULL COMMENT 'branch of student',
+	college varchar(255) NOT NULL COMMENT 'college of student',
+	mobileNo varchar(15) NOT NULL COMMENT 'mobileNo of student',
+	mobileOs varchar(255) DEFAULT NULL COMMENT 'os of mobile of student',
+	mobileImei varchar(255) DEFAULT NULL COMMENT 'imei of mobile of student',
+	mobileSim varchar(255) DEFAULT NULL COMMENT 'simNo of mobile of student',
+	deviceId varchar(255) DEFAULT NULL COMMENT 'deviceId of mobile of student',
+	fbUserName varchar(255) DEFAULT NULL COMMENT 'facebook user name of student',
+	userName varchar(255) NOT NULL COMMENT 'advaita user name of student',
+	salt int NOT NULL COMMENT 'Salt to be used for password hashing',
+	password int NOT NULL COMMENT 'password hashed',
+	PRIMARY KEY (id),
+	FOREIGN KEY (appId) REFERENCES eventApp(id),
+	UNIQUE email(appId, email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS eventGroupMeta (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	appId int(11) NOT NULL COMMENT 'appId of event',
+	name varchar(255) NOT NULL COMMENT 'name of eventCategory',
+	imgUrl varchar(2555) DEFAULT NULL COMMENT 'image url',
+	about varchar(3000) DEFAULT NULL COMMENT 'About eventCategory',
+	rules varchar(2225) DEFAULT NULL COMMENT 'rules of eventCategory',
+	contact varchar(2555) DEFAULT NULL COMMENT 'contact information',
+	PRIMARY KEY (id),
+	FOREIGN KEY (appId) REFERENCES eventApp(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS eventMeta (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	appId int(11) NOT NULL COMMENT 'appId of event',
+	name varchar(255) NOT NULL COMMENT 'name of event',
+	eventGroupId int(11) NOT NULL COMMENT 'id from eventGroupMeta',
+	imgUrl varchar(2555) DEFAULT NULL COMMENT 'image url',
+	about varchar(3000) DEFAULT NULL COMMENT 'About Event',
+	scheduleFrom varchar(100) DEFAULT NULL COMMENT 'from time of event',
+	scheduleTo varchar(100) DEFAULT NULL COMMENT 'to time of event',
+	problemStatement varchar(2555) DEFAULT NULL COMMENT 'problem statement of event',
+	rules varchar(2225) DEFAULT NULL COMMENT 'rules of event',
+	prizes varchar(2555) DEFAULT NULL COMMENT 'prize detail of event',
+	groupNo int(5) DEFAULT NULL COMMENT 'number of participants',
+	leaderBoard varchar(2555) DEFAULT NULL COMMENT 'leader board',
+	contact varchar(2555) DEFAULT NULL COMMENT 'contact information',
+	PRIMARY KEY (id),
+	FOREIGN KEY (appId) REFERENCES eventApp(id),
+	FOREIGN KEY (eventGroupId) REFERENCES eventGroupMeta(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS sponsors (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	appId int(11) NOT NULL COMMENT 'appId of event',
+	name varchar(255) NOT NULL COMMENT 'name of sponsor',
+	imgUrl varchar(2555) DEFAULT NULL COMMENT 'image url',
+	about varchar(3000) DEFAULT NULL COMMENT 'About sponsor',
+	status varchar(255) DEFAULT NULL COMMENT 'status of sponsor',
+	contact varchar(2555) DEFAULT NULL COMMENT 'contact sponsor',
+	amount varchar(255) DEFAULT NULL COMMENT 'amount of sponsor',
+	PRIMARY KEY (id),
+	FOREIGN KEY (appId) REFERENCES eventApp(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS eventRegistration (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	eventId int(11) NOT NULL COMMENT 'id of eventMeta',
+	feeReceived double DEFAULT NULL COMMENT 'EVENT REGISTRATION FEE',
+	feeStatus bit(2) DEFAULT NULL COMMENT 'STATUS OF FEE',
+	registrationDate datetime DEFAULT NULL COMMENT 'DATE TIME OF REGISTRATION',
+	PRIMARY KEY (id),
+	FOREIGN KEY (eventId) REFERENCES eventMeta(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS eventRegistered (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	eventRegistrationId int(11) NOT NULL COMMENT 'id of eventRegistration',
+	registrationId int(11) NOT NULL COMMENT 'id of register',
+	PRIMARY KEY (id),
+	FOREIGN KEY (eventRegistrationId) REFERENCES eventRegistration(id),
+	FOREIGN KEY (registrationId) REFERENCES register(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS discussionTopic (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	appId int(11) NOT NULL COMMENT 'id of eventApp',
+	name varchar(255) DEFAULT NULL COMMENT 'name of the person who posted',
+	email varchar(255) DEFAULT NULL COMMENT 'email of the person who posted',
+	fbUserName varchar(255) DEFAULT NULL COMMENT 'fbUserName of the person who posted',
+	topicTitle varchar(255) DEFAULT NULL COMMENT 'Topic Title',
+	topicSummary varchar(255) DEFAULT NULL COMMENT 'Topic Summary',
+	postDateTime datetime DEFAULT NULL COMMENT 'DATE TIME OF Posting',
+	updatedDateTime datetime DEFAULT NULL COMMENT 'DATE TIME OF Updated comment',
+	PRIMARY KEY (id),
+	FOREIGN KEY (appId) REFERENCES eventApp(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS discussionComment (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	appId int(11) NOT NULL COMMENT 'id of eventApp',
+	name varchar(255) DEFAULT NULL COMMENT 'name of the person who commented',
+	email varchar(255) DEFAULT NULL COMMENT 'email of the person who commented',
+	fbUserName varchar(255) DEFAULT NULL COMMENT 'fbUserName of the person who commented',
+	topicId int(11) NOT NULL COMMENT 'Topic Id of discussionTopic',
+	message varchar(2555) DEFAULT NULL COMMENT 'comment',
+	postDateTime datetime DEFAULT NULL COMMENT 'DATE TIME OF Commenting',
+	PRIMARY KEY (id),
+	FOREIGN KEY (appId) REFERENCES eventApp(id),
+	FOREIGN KEY (topicId) REFERENCES discussionTopic(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS roseiQuiz (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	appId int(11) NOT NULL COMMENT 'id of eventApp',
+	question varchar(2555) DEFAULT NULL COMMENT 'Question sent to mobile',
+	comment varchar(2555) DEFAULT NULL COMMENT 'Any Comment about question',
+	answer varchar(255) DEFAULT NULL COMMENT 'answer of question',
+	questionImage varchar(255) DEFAULT NULL COMMENT 'image of question if any',
+	positiveCash int(11) NOT NULL COMMENT 'positive cash to be given if answer is correct',
+	negativeCash int(11) DEFAULT NULL COMMENT 'negative cash to be given if answer is correct',
+	postDateTime datetime DEFAULT NULL COMMENT 'DATE TIME OF Quetion post',
+	expiryDateTime datetime DEFAULT NULL COMMENT 'DATE TIME OF expiry of question',
+	PRIMARY KEY (id),
+	FOREIGN KEY (appId) REFERENCES eventApp(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
