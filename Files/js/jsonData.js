@@ -3,20 +3,20 @@ Developed By @AnshBikram
 */
 //var urlStart = 'http://localhost:8081/perfectEvent/';
 var urlStart = 'http://54.209.145.90:8080/perfectEvent/';
-$fbuserSession = '';
-$advuserSession = 'Guest';
-$loggedIn = false;
-$userEmailSession = '';
+$fbuserSession = 'AnshBikram';
+$advuserSession = 'AnshBikram';
+$loggedIn = true;
+$userEmailSession = 'ansh.ansh20067@gmail.com';
 $appId = '';
 $userId = '';
 $id = 1;
-$advusernameSession = '';
+$advusernameSession = 'AnshBikram';
 $session = '';
 $counter = '';
 $accessToken = '';
 $eventNoRegister = ['MUN','Contact','About_Us','Salsa','Archery','Rosei','Funstudio','Acropolis','Ultimate_Literatti','TUSK','Slowcycle','Youtube','More_Games','Street_X','Youtube','Registrations','Super_6','Tug_of_War'];
 $event = ['Codeenigma','CSI','Dejavu','GoogleBuster','Botsumo','Hovorun','Interroger','Pathseeker','Piratewarz','SEO','Simulab','Switchcoding','Technova','Xtermination','Appfest','Arbalete','Blueprint','Butsumo',' ',' ','Broadway','Footloose','Lamode','Rockathon','Soprano','Bollyquiz','Acoustica','Picasso','Accommodation','Counter_Strike_1-6','NFS_Most_Wanted','Fifa_11','Dota_2-0','Paper_Presentation'];
-$registeredEvent = [];
+$registeredEvent = ['Codeenigma','CSI','Dejavu'];
 
 function putEventToStickyNote()
 {
@@ -39,21 +39,21 @@ function putEventToStickyNote()
 	function getEventRegisterArray()
 	{
 		var url = urlStart + 'Servlet/controllerGetEventRegistered';
-		var posting = $.post(url, {responseType : 'json', appId : 1, userId : $userId});
-		posting.done(function(data){
-			if(data.response == 'success')
-			{
-				$registeredEvent = data.responseString.split(' ');
-				$registeredEvent = $registeredEvent.filter( function( item, index, inputArray ) {
-					return inputArray.indexOf(item) == index;
-				});
+		//var posting = $.post(url, {responseType : 'json', appId : 1, userId : $userId});
+		//posting.done(function(data){
+		//	if(data.response == 'success')
+		//	{
+		//		$registeredEvent = data.responseString.split(' ');
+		//		$registeredEvent = $registeredEvent.filter( function( item, index, inputArray ) {
+		//			return inputArray.indexOf(item) == index;
+		//		});
 				putEventRegisterArray();
 				putEventToStickyNote();
-			}
-			else
-				resetEventRegister();
+		//	}
+		//	else
+		//		resetEventRegister();
 			
-		});
+		//});
 	}
 	
 	function resetEventRegister()
@@ -102,33 +102,34 @@ $(document).ready(function(){
 	
 	function getDataForForumTopic()
 	{
+		$loggedIn = true //testing
 		$('.refresh_forum').hide();
 		$('.loading_forum').show();
 		var url = urlStart + 'Servlet/controllerGetDiscussionTopic';
-		var posting = $.get( url, { appId:'1', responseType : 'json' } );
-		posting.done(function(data){
-		var link = '';
-		var pic = './Files/img/guestLarge.png';
-		if($loggedIn)
-		{
-			pic = 'http://graph.facebook.com/' + $fbuserSession + '/picture?width=80&height=80';
-			link = 'http://www.facebook.com/' + $fbuserSession
-		}
-		var txt = '<li><div class="acc">' +
+		//var posting = $.get( url, { appId:'1', responseType : 'json' } );
+		//posting.done(function(data){
+			var link = '';
+			var pic = './Files/img/guestLarge.png';
+			if($loggedIn)
+			{
+				pic = 'http://graph.facebook.com/' + $fbuserSession + '/picture?width=80&height=80';
+				link = 'http://www.facebook.com/' + $fbuserSession
+			}
+			var txt = '<li><div class="acc">' +
 					'<a href="' + link + '" target="_blank" onclick="return false">' +
 					'<img class="pic" style="height:80px;width:80px;border-radius:40px;" src="' + pic + '"  alt="" />' +
 					'<p class="author">' + $advuserSession + '</p></a></div><div>' +
 					'<textarea class="postingText" placeholder="Say Hello to your friendz!!!">' +
 					'</textarea><input class="post" type="submit" value="Express" />' +
 					'<p class="post_message"></p></div></li>';
-		$('.forum > ul').html(txt);			
+			$('.forum > ul').html(txt);			
 		
-			$(data.responseString).each(function(){
-				insertTopic(this.fbUserName,this.name,this.discussionId,this.topicSummary,this.updatedDateTime);
+				//$(data.responseString).each(function(){
+				//	insertTopic(this.fbUserName,this.name,this.discussionId,this.topicSummary,this.updatedDateTime);
+				//});
+				$('.loading_forum').hide();
+				$('.refresh_forum').show();
 			});
-			$('.loading_forum').hide();
-			$('.refresh_forum').show();
-		});
 	}
 	
 	function format(dt)
@@ -222,10 +223,10 @@ $(document).ready(function(){
 				$time = $time[2]+' '+$time[1]+' '+$time[3]+' '+$time[4];
 				$('.postingText').val('');
 				var url = urlStart + 'Servlet/controllerUploadDiscussionTopic';
-				var posting = $.post( url, { appId:'1',name: $advuserSession, email:$userEmailSession, fbUserName:$fbuserSession, topicTitle:'Advaita', topicSummary:text, responseType : 'json', accessToken : $accessToken} );
-				posting.done(function( data ){
-					if (data.response === 'success')
-					{
+				//var posting = $.post( url, { appId:'1',name: $advuserSession, email:$userEmailSession, fbUserName:$fbuserSession, topicTitle:'Advaita', topicSummary:text, responseType : 'json', accessToken : $accessToken} );
+				//posting.done(function( data ){
+				//	if (data.response === 'success')
+				//	{
 						$('.post_message').text('Your Post was updated sucessfully');
 						$('.post_message').animate({opacity : '1'},function(){
 							$('.post_message').animate({opacity : '0'},5000);
@@ -244,22 +245,22 @@ $(document).ready(function(){
 								'<input class="givecmntSub" type="submit" value="Comment" /></li></ul>' +
 								'</div></li>';
 							$('.forum > ul > li:first-child').after(html);
-					}
-					else if(data.responseString == "Session expired")
-					{
-						killSession();
-					}
-					else
-					{
-						$('.post_message').text('Error in connection. Try again later!!!');
-						$('.post_message').animate({opacity : '1'},function(){
-							$('.post_message').animate({opacity : '0'},5000);
-						});
+				//	}
+				//	else if(data.responseString == "Session expired")
+				//	{
+				//		killSession();
+				//	}
+				//	else
+				//	{
+				//		$('.post_message').text('Error in connection. Try again later!!!');
+				//		$('.post_message').animate({opacity : '1'},function(){
+				//			$('.post_message').animate({opacity : '0'},5000);
+				//		});
 					}
 					$('.loading_forum').hide();
 					$('.refresh_forum').show();
 
-				});
+				//});
 				
 				exit(0);
 			}
@@ -301,18 +302,18 @@ $(document).ready(function(){
 	{			//alert($(obj).html());
 
 		var url = urlStart + 'Servlet/controllerGetDiscussionComment';
-		var posting = $.get( url, { appId:'1',topicId : dissId, responseType : 'json'} );
+		//var posting = $.get( url, { appId:'1',topicId : dissId, responseType : 'json'} );
 		$comments = '';
-		posting.done(function(data){
-			$(data.responseString).each(function(){
+		//posting.done(function(data){
+		//	$(data.responseString).each(function(){
 			
-				$comments += '<li title="' + this.name + '" id="' + this.commentId + '"><div class="cmntPic">' +
-						'<a href="http://www.facebook.com/' + this.fbUserName + '" target="_blank">' +
-						'<img class="amntPic" src="http://graph.facebook.com/' + this.fbUserName + 
-						'/picture?width=20&height=20" alt=""/>' +
-						'</a></div><p>' + this.message + '</p></li>'; 
-			});
-			$(obj).before($comments);
+		//		$comments += '<li title="' + this.name + '" id="' + this.commentId + '"><div class="cmntPic">' +
+		//				'<a href="http://www.facebook.com/' + this.fbUserName + '" target="_blank">' +
+		//				'<img class="amntPic" src="http://graph.facebook.com/' + this.fbUserName + 
+		//				'/picture?width=20&height=20" alt=""/>' +
+		//				'</a></div><p>' + this.message + '</p></li>'; 
+		//	});
+		//	$(obj).before($comments);
 			$x.siblings().slideDown(300);
 		});	
 	}
@@ -327,28 +328,28 @@ $(document).ready(function(){
 			elem.val('');
 			//elem.parent().before($html);
 			var url = urlStart + 'Servlet/controllerUploadDiscussionComment';
-			var posting = $.post( url, { appId:'1',topicId : id, responseType : 'json',
-				fbUserName : $fbuserSession, name : $advuserSession, email : $userEmailSession,
-				message : data, accessToken : $accessToken} );
-			posting.done(function(data){
-				if(data.response == 'success')
-				{
+			//var posting = $.post( url, { appId:'1',topicId : id, responseType : 'json',
+			//	fbUserName : $fbuserSession, name : $advuserSession, email : $userEmailSession,
+			//	message : data, accessToken : $accessToken} );
+			//posting.done(function(data){
+			//	if(data.response == 'success')
+			//	{
 					var html = '<li style="display:block" id="' + id + '"><div class="cmntPic">' +
 							'<a href="http://www.facebook.com/' + $fbuserSession + '" target="_blank">' +
 							'<img class="amntPic" src="http://graph.facebook.com/' + $fbuserSession + 
 							'/picture?width=20&height=20" alt=""/>' +
 							'</a></div><p>' + text + '</p></li>';
 					elem.parent().parent().children(':first-child').after(html);
-				}
-				else if(data.responseString == 'Session expired')
-				{
-					killSession();
-				}
-				else
-				{
-					$('.forum').animate({scrollTop : '0'},200);
-					$('.post_message').finish();
-					$('.post_message').fadeIn(100).text('Error occured, while posting the message. Please try again later').fadeOut(5000);
+			//	}
+			//	else if(data.responseString == 'Session expired')
+			//	{
+			//		killSession();
+			//	}
+			//	else
+			//	{
+			//		$('.forum').animate({scrollTop : '0'},200);
+			//		$('.post_message').finish();
+			//		$('.post_message').fadeIn(100).text('Error occured, while posting the message. Please try again later').fadeOut(5000);
 				}
 				$('.loading_forum').hide();
 				$('.refresh_forum').show();
@@ -462,29 +463,29 @@ $(document).ready(function(){
 		{
 			$('#sumRegister').hide();
 			var url = urlStart + 'Servlet/controllerGeneralRegistration';
-			var posting = $.post( url, { appId:'1', name : name.val(), responseType : 'json', email : email.val(),
-							year : year.val().charAt(0), branch : branch.val(), college : college.val(), fbUserName : fbUser.val(), userName : advUser.val(),
-							password : passwd.val(), mobileNo : contact.val(), registrationFrom : 'computer', feeReceived : 0,
-							mobileOs : '0', mobileImei : '0', mobileSim : '0', deviceId : '0'});
-			posting.done(function(data){
+			//var posting = $.post( url, { appId:'1', name : name.val(), responseType : 'json', email : email.val(),
+			//				year : year.val().charAt(0), branch : branch.val(), college : college.val(), fbUserName : fbUser.val(), userName : advUser.val(),
+			//				password : passwd.val(), mobileNo : contact.val(), registrationFrom : 'computer', feeReceived : 0,
+			//				mobileOs : '0', mobileImei : '0', mobileSim : '0', deviceId : '0'});
+			//posting.done(function(data){
 				$('#sumRegister').hide();
-				if(data.response == 'success')
-				{
+			//	if(data.response == 'success')
+			//	{
 					$('.reg_suc').show().html(data.responseString);
 					$('.reg_suc').siblings().hide(200,function(){
 						$('#reg_back').show();
 						$('#register_module').css({height : 'auto'});
 					});
-				}
-				else
-				{
-					$('.reg_suc').show().html('Registration unsuccessful. The username and the email is already registered.');
-					$('.reg_suc').siblings().hide(200,function(){
-						$('#reg_back').show();
-						$('#register_module').css({height : 'auto'});
-					});
-				}
-			});
+			//	}
+			//	else
+			//	{
+			//		$('.reg_suc').show().html('Registration unsuccessful. The username and the email is already registered.');
+			//		$('.reg_suc').siblings().hide(200,function(){
+			//			$('#reg_back').show();
+			//			$('#register_module').css({height : 'auto'});
+			//		});
+			//	}
+			//});
 
 		}
 			
@@ -536,22 +537,23 @@ $(document).ready(function(){
 	function getFbUserName(text)
 	{
 		var url = urlStart + 'Servlet/controllerGetFbUserName';
-		var posting = $.post(url , {userName : text, responseType : 'json'});
+		//var posting = $.post(url , {userName : text, responseType : 'json'});
 		
-		posting.done(function(data){
-			if(data.response == 'success')
-			{
-				var fb = 'http://graph.facebook.com/'  + data.fbUserName + '/picture?width=150&height=150';
+		//posting.done(function(data){
+		//	if(data.response == 'success')
+		//	{
+				//var fb = 'http://graph.facebook.com/'  + data.fbUserName + '/picture?width=150&height=150';
+				var fb = 'http://graph.facebook.com/'  + 'AnshBikram' + '/picture?width=150&height=150';
 				$('#user1_pic').attr('src',fb);
 				loginUser();
 				//getDataForForumTopic();
-			}
-			else
-			{
-				$('#AUsername').attr('disabled',false);
-				$('#login_response1').finish();
-				$('#login_response1').fadeIn(100).html('Oops!You are not registered yet.').fadeOut(3000);
-			}
+		//	}
+		//	else
+		//	{
+		//		$('#AUsername').attr('disabled',false);
+		//		$('#login_response1').finish();
+		//		$('#login_response1').fadeIn(100).html('Oops!You are not registered yet.').fadeOut(3000);
+		//	}
 				
 		});
 		$('#AUsername').attr('disabled',false);
@@ -590,33 +592,37 @@ $(document).ready(function(){
 		var uname = $('#AUsername').val();
 		var passwd = $('#login_passwd').val();
 		var url = urlStart + 'Servlet/LoginServlet';
-		var posting = $.post(url, {userName : uname, password : passwd, responseType : 'json'});
-		posting.done(function(data){//alert(data.currentSessionName+' '+data.curentSessionUserName);
-			if(data.response == 'success')
-			{
-				$userEmailSession = data.currentSessionUserEmail;
-				$advuserSession = data.currentSessionName;
-				$fbuserSession = data.currentSessionFbUserName;
-				$advusernameSession = data.curentSessionUserName;
-				$accessToken = data.accessToken;
+		//var posting = $.post(url, {userName : uname, password : passwd, responseType : 'json'});
+		//posting.done(function(data){//alert(data.currentSessionName+' '+data.curentSessionUserName);
+		//	if(data.response == 'success')
+		//	{
+				//$userEmailSession = data.currentSessionUserEmail;
+				$userEmailSession = "ansh.ansh20067@gmail.com";
+				//$advuserSession = data.currentSessionName;
+				$advuserSession = "AnshBikram";
+				//$fbuserSession = data.currentSessionFbUserName;
+				$fbuserSession = "AnshBikram";
+				//$advusernameSession = data.curentSessionUserName;
+				$advusernameSession = "AnshBikram";
+				//$accessToken = data.accessToken;
 				$loggedIn = true;
 				clearTimeout(sw_counter);
 				$('#sw_counter').fadeOut(500);
 				//startTimer();				
-				$appId = data.currentSessionAppId;
-				$userId = data.currentSessionUserId;//alert($advuserSession+' '+$fbuserSession);
+				//$appId = data.currentSessionAppId;
+				//$userId = data.currentSessionUserId;//alert($advuserSession+' '+$fbuserSession);
 				getEventRegisterArray()
 				setCurrentSession($advuserSession, $fbuserSession, $loggedIn);
 				getDataForForumTopic();
 				exit(0);
-			}
-			else
-			{
-				$('#login_response2').fadeIn(100).html('Password maybe incorrect or you may not have validated your email!!!').fadeOut(5000);
-				exit(0);
-			}
-			exit(0);
-		});
+		//	}
+		//	else
+		//	{
+		//		$('#login_response2').fadeIn(100).html('Password maybe incorrect or you may not have validated your email!!!').fadeOut(5000);
+		//		exit(0);
+		//	}
+		//	exit(0);
+		//});
 	}
 	
 	function startTimer()
