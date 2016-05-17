@@ -306,16 +306,16 @@ $(document).ready(function(){
 			if(!$loggedIn)
 			{
 				alert('You are not logged in.\nKindly Login to register your domain.\nPress alt + u to login.');
-				//return false;
+				return false;
 			}
 			var cnf = confirm('Once you register your domain you will not be able to modify it.\nAre you sure?');
-			//if(!cnf)
-			//	return false;
+			if(!cnf)
+				return false;
 			var link = $(this).parent().siblings('td').children('.SEO_domain_name');
 			if(link.val().toLowerCase().indexOf('readysteadyseo') == -1)
 			{
 				alert('Not a valid Domain link.\nYour Domain link must include the keyword "readysteadyseo"');
-			//	return false;
+				return false;
 			}
 			var url = 'http://54.209.145.90:8080/perfectEvent/Servlet/controllerSeoRegister';
 			var posting = $.post(url, {responseType : 'json', accessToken : $accessToken, link : link.val(), userId : $userId, userName : $advuserSession});
@@ -355,6 +355,7 @@ $(document).ready(function(){
 			$cur = $(this).parent();
 			$cls = $cur.attr('class').split(' ');
 			$evnt = $(this).parent().parent().children('#eventName').html();//alert($);
+			$loggedIn = True //for Tetsting purpose
 			if(!$loggedIn)
 				alert('You are not logged in.\nKindly login to register for this event!!!');
 			else if(!$event_reg)
