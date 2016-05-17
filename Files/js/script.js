@@ -318,36 +318,36 @@ $(document).ready(function(){
 				return false;
 			}
 			var url = 'http://54.209.145.90:8080/perfectEvent/Servlet/controllerSeoRegister';
-			var posting = $.post(url, {responseType : 'json', accessToken : $accessToken, link : link.val(), userId : $userId, userName : $advuserSession});
-			posting.done(function(data){
-				if(data.response == 'success')
-				{
+			//var posting = $.post(url, {responseType : 'json', accessToken : $accessToken, link : link.val(), userId : $userId, userName : $advuserSession});
+			//posting.done(function(data){
+			//	if(data.response == 'success')
+			//	{
 					alert('Your domain link has got registered successfully.');
 					link.val('');
 					getRegisteredUser();
-				}
-				else if(data.response == 'error')
-				{
-					alert(data.responseString);
-					link.val('');
-				}
-			});
+			//	}
+			//	else if(data.response == 'error')
+			//	{
+			//		alert(data.responseString);
+			//		link.val('');
+			//	}
+			//});
 		});
 	}
 	
 	function getRegisteredUser()
 	{
 		var url = 'http://54.209.145.90:8080/perfectEvent/Servlet/controllerSeoLeader';
-		var posting = $.post(url);
-		posting.done(function(data){
-			var score = data.totalScore;
-			var name = data.userName;
+		//var posting = $.post(url);
+		//posting.done(function(data){
+		//	var score = data.totalScore;
+		//	var name = data.userName;
 			$('#icon_detail #SEO_table').html('<tr><th>Names</th><th>Domain Links</th></tr>');
-			$.each(score,function(idx, dt){
-				var html = '\n<tr>\n<td>' + name[idx] + '</td>\n<td>' + dt + '</td>\n</tr>';
-				$('#icon_detail #SEO_table').append(html);
-			});
-		});
+		//	$.each(score,function(idx, dt){
+		//		var html = '\n<tr>\n<td>' + name[idx] + '</td>\n<td>' + dt + '</td>\n</tr>';
+		//		$('#icon_detail #SEO_table').append(html);
+		//	});
+		//});
 	}
 	
 	function registerWrapperReg(){
@@ -355,7 +355,8 @@ $(document).ready(function(){
 			$cur = $(this).parent();
 			$cls = $cur.attr('class').split(' ');
 			$evnt = $(this).parent().parent().children('#eventName').html();//alert($);
-			$loggedIn = True //for Tetsting purpose
+			$loggedIn = true //for tetsting purpose
+			$event_reg = false //for testing purpose
 			if(!$loggedIn)
 				alert('You are not logged in.\nKindly login to register for this event!!!');
 			else if(!$event_reg)
@@ -367,10 +368,10 @@ $(document).ready(function(){
 					{	
 						var index = $event.indexOf($evnt) + 1;
 						var url = 'http://54.209.145.90:8080/perfectEvent/Servlet/controllerEventRegistration';
-						var posting = $.post(url,{appId : $appId, eventId : index, feeReceived : 0, responseType : 'json', userId : $userId, accessToken : $accessToken});
-						posting.done(function(data){
-							if(data.response == 'success')
-							{
+						//var posting = $.post(url,{appId : $appId, eventId : index, feeReceived : 0, responseType : 'json', userId : $userId, accessToken : $accessToken});
+						//posting.done(function(data){
+						//	if(data.response == 'success')
+						//	{
 								$('#event_' + $evnt).attr('title', 'true true');
 								$cur.attr('class','wrapper_event_reg true true');
 								$cur.animate({left : 0, },400,function(){$event_reg = true;});
@@ -379,10 +380,10 @@ $(document).ready(function(){
 								$('#icon_detail .wrapper_event_reg > .event_reg > p').animate({lineHeight : '1.3'},200);
 								$('#icon_detail .success').fadeIn(100).fadeOut(10000);
 								getEventRegisterArray();
-							}
-							else
-								alert('Event registration unsuccessful. Please try again later.');
-						});
+						//	}
+						//	else
+						//		alert('Event registration unsuccessful. Please try again later.');
+						//});
 					}
 					else return;
 				}
@@ -404,12 +405,12 @@ $(document).ready(function(){
 			var url = 'http://54.209.145.90:8080/perfectEvent/Servlet/controllerInviteFriends';
 			var posting = $.post(url,{appId : $appId, eventId : eventId, responseType : 'json', registrationId : $userId, accessToken : $accessToken, email : email, name : $advuserSession, eventName : eventName});
 			$('#icon_detail .reg_form .evnt_partner1').val('');
-			posting.done(function(data){
-				if(data.response == 'success')
+			//posting.done(function(data){
+			//	if(data.response == 'success')
 					$('.reg_submit').fadeIn(100).fadeOut(7000);
-				else
-					alert('Something went wrong.\nPease try again later.');
-			});
+			//	else
+			//		alert('Something went wrong.\nPease try again later.');
+			//});
 			
 		});
 	}
