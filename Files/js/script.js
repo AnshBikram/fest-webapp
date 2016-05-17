@@ -356,12 +356,11 @@ $(document).ready(function(){
 			$cls = $cur.attr('class').split(' ');
 			$evnt = $(this).parent().parent().children('#eventName').html();//alert($);
 			$loggedIn = true //for tetsting purpose
-			$event_reg = false //for testing purpose
 			if(!$loggedIn)
 				alert('You are not logged in.\nKindly login to register for this event!!!');
 			else if(!$event_reg)
 			{
-				$cls[1] = "true"
+				/*$cls[1] = "true"
 				if($cls[1] == 'false')
 				{	
 					var conf = confirm("Are you sure,\n you want to register for this event ?");
@@ -389,9 +388,9 @@ $(document).ready(function(){
 					else return;
 				}
 				else if($cls[1] == 'true')
-					$cur.animate({left : 0, },400,function(){$event_reg = true;});
-				else
-					alert('Something went wrong.\nPlease try again.');
+				*/	$cur.animate({left : 0, },400,function(){$event_reg = !$event_reg;});
+				//else
+				//	alert('Something went wrong.\nPlease try again.');
 			}
 			else
 				$('.wrapper_event_reg').animate({left : '-555px'},200,function(){$event_reg = false;});
