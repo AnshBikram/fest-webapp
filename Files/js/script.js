@@ -361,6 +361,7 @@ $(document).ready(function(){
 				alert('You are not logged in.\nKindly login to register for this event!!!');
 			else if(!$event_reg)
 			{
+				$cls[1] == "true"
 				if($cls[1] == 'false')
 				{	
 					var conf = confirm("Are you sure,\n you want to register for this event ?");
