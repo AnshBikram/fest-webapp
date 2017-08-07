@@ -129,7 +129,7 @@ $(document).ready(function(){
 				//});
 				$('.loading_forum').hide();
 				$('.refresh_forum').show();
-			});
+			//});
 	}
 	
 	function format(dt)
@@ -256,7 +256,7 @@ $(document).ready(function(){
 				//		$('.post_message').animate({opacity : '1'},function(){
 				//			$('.post_message').animate({opacity : '0'},5000);
 				//		});
-					}
+				//	}
 					$('.loading_forum').hide();
 					$('.refresh_forum').show();
 
@@ -315,7 +315,7 @@ $(document).ready(function(){
 		//	});
 		//	$(obj).before($comments);
 			$x.siblings().slideDown(300);
-		});	
+		//});	
 	}
 	
 	function sendForumComment(data, id, elem)
@@ -350,10 +350,10 @@ $(document).ready(function(){
 			//		$('.forum').animate({scrollTop : '0'},200);
 			//		$('.post_message').finish();
 			//		$('.post_message').fadeIn(100).text('Error occured, while posting the message. Please try again later').fadeOut(5000);
-				}
+			//	}
 				$('.loading_forum').hide();
 				$('.refresh_forum').show();
-			});
+			//});
 		}
 		else
 			exit(0);
@@ -555,7 +555,7 @@ $(document).ready(function(){
 		//		$('#login_response1').fadeIn(100).html('Oops!You are not registered yet.').fadeOut(3000);
 		//	}
 				
-		});
+		//});
 		$('#AUsername').attr('disabled',false);
 	}
 	
