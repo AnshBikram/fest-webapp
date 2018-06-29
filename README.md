@@ -1,3 +1,4 @@
+![Logo](./logo.png)
 # fest-webapp
 
 Official techno-cult fest website of IIIT Bhubaneswar (ADVAITA'14)
